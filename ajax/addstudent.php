@@ -6,7 +6,7 @@ session_start();
     //$class=test_input($_POST['class1']);
     $id = test_input($_POST['mentor']);
     $sid = test_input($_POST['student']);
-    echo $id;
+    if($id>0 && $sid>0){
         $query=$db->prepare("INSERT INTO assign(id,sid) VALUES (?,?)");
         $data=array($id,$sid);
         $execute=$query->execute($data);
@@ -17,6 +17,9 @@ session_start();
         else{
             echo"something went wrong";
         }
+    }else{
+        alert('Input the values');
+    }
     
 
 

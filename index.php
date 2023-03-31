@@ -35,6 +35,33 @@
                     </div>
                 </div>
             </form>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6" >
+                            <h2>Mentor Assignment List</h2>
+                            <!--<button class="showalluni" onclick="showassign()" >MENTOR-STUDENT LIST</button></div>-->
+                <div class="box-footer">
+                    <div class="tabledesign">
+                        <div class="listclass" id="listclass"></div>
+                    </div>
+                </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                </div>
+            </div>
+            <h2>Evaluate Students</h2>
+            <form action="">
+                    <div class="form-group">
+                        <label for="uni">CHOOSE WHO YOU ARE</label><br>
+                        <div class="contain-input">
+                            <div class="list4" id="list4" style="width: 100%; float: left;"></div>
+                        </div>
+                    </div>
+                    <button class="button1" onclick="evaluate()" style="margin-top: 2rem;">SUBMIT</button>
+                    </form>
 </body>
 <script>
     
@@ -49,10 +76,23 @@ function getmentor() {
             //token: token
         },
         success: function(data) {
-            //$('#list').html(data);
             $('#list3').html(data);
         }
     });
+}
+getmentor2();
+function getmentor2() {
+
+$.ajax({
+    type: 'POST',
+    url: "ajax/cgetmentor.php",
+    data: {
+        //token: token
+    },
+    success: function(data) {
+        $('#list4').html(data);
+    }
+});
 }
 
 getstudent();
@@ -86,6 +126,8 @@ function assign() {
                 if (data == 0) {
                     alert('assign added successfully');
                     window.location = "index.php";
+                }else{
+                    alert('Input the values');
                 }
             }
         });
@@ -93,6 +135,59 @@ function assign() {
         alert('please fill all details');
     }
 };
+showassign();
+
+function showassign() {
+        $.ajax({
+            type: 'POST',
+            url: "ajax/getallassign.php",
+            data: {
+                //token: token
+            },
+            success: function(data) {
+                $('#listclass').html(data);
+            }
+        });
+    }
+
+    function deleted(i){
+    $.ajax({
+        type: 'POST',
+        url: "ajax/delassign.php",
+        data: {
+            id:i
+        },
+        success: function(data) {
+            if (data == 0) {
+                alert('Deleted successfully');
+                window.location = "index.php";
+                }
+        }
+    });
+}
+
+function evaluate(){
+    var mentor = document.getElementById('mentor').value;
+    if (mentor != ""&& student!="") {
+        $.ajax({
+            type: 'POST',
+            url: "ajax/evaluate.php",
+            data: {
+                mentor:mentor,
+            },
+            success: function(data) {
+                if (data == 0) {
+                    alert('evaluated successfully');
+                    window.location = "index.php";
+                }else{
+                    alert('Input the values');
+                }
+            }
+        });
+    } else {
+        alert('please fill all details');
+    }
+}
 
 
     </script>
