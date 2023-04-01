@@ -41,7 +41,6 @@
                         <div class="col-sm-3"></div>
                         <div class="col-sm-6" >
                             <h2>Mentor Assignment List</h2>
-                            <!--<button class="showalluni" onclick="showassign()" >MENTOR-STUDENT LIST</button></div>-->
                 <div class="box-footer">
                     <div class="tabledesign">
                         <div class="listclass" id="listclass"></div>
@@ -53,15 +52,38 @@
                 </div>
             </div>
             <h2>Evaluate Students</h2>
-            <form action="">
+                
+            <form class="form1 show" >
+            
                     <div class="form-group">
-                        <label for="uni">CHOOSE WHO YOU ARE</label><br>
-                        <div class="contain-input">
-                            <div class="list4" id="list4" style="width: 100%; float: left;"></div>
-                        </div>
+                        <label for="uni">Choose Who you are</label><br>
+                        <select name="list4" id="list4" class="form-control" onchange="getstudent2();">
+                            <option value="0">Select Mentor</option>
+                        </select>
                     </div>
-                    <button class="button1" onclick="evaluate()" style="margin-top: 2rem;">SUBMIT</button>
-                    </form>
+                    <div class="form-group">
+                        <label for="tclass" style="margin-top: 2rem;">Choose student to evaluate</label><br>
+                        <select name="list5" id="list5" class="form-control">
+                            <option value="0">Select Student ID</option>
+                        </select>
+                    </div>
+            <div class="form-group">
+                <label for="idea">Idea</label><br>
+                <input type="number" name="idea" id="idea" placeholder="Ideation phase marks" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="execution">Execution</label><br>
+                <input type="number" name="exceution" id="execution" placeholder="Execution phase marks" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="viva">Viva</label><br>
+                <input type="number" name="viva" id="viva" placeholder="Viva marks " class="form-control">
+            </div>
+            <div >
+                <button class="button1" onclick="evaluate1()" style="margin-top: 2rem;">SUBMIT</button>
+            </div>
+            
+		</form>
 </body>
 <script>
     
@@ -125,7 +147,7 @@ function assign() {
                 alert(data);
                 if (data == 0) {
                     alert('assign added successfully');
-                    window.location = "index.php";
+                    //window.location = "index.php";
                 }
             }
         });
@@ -133,8 +155,8 @@ function assign() {
         alert('please fill all details');
     }
 };
-showassign();
 
+showassign();
 function showassign() {
         $.ajax({
             type: 'POST',
@@ -149,7 +171,7 @@ function showassign() {
     }
 
     function deleted(i,a){
-        alert(i);
+        //alert(i);
     $.ajax({
         type: 'POST',
         url: "ajax/delassign.php",
@@ -167,30 +189,60 @@ function showassign() {
         }
     });
 }
-
-function evaluate(){
-    var mentor = document.getElementById('mentor').value;
-    if (mentor != ""&& student!="") {
+//getstudent2();
+function getstudent2() {
+    var id = document.getElementById('list4').value;
+$.ajax({
+    type: 'POST',
+    url: "ajax/getstudent.php",
+    data: {
+        //token: token
+        id:id
+    },
+    success: function(data) {
+        $('#list5').html(data);
+    }
+});
+}
+function evaluate1(){
+    var id = document.getElementById('list4').value;
+    var sid = document.getElementById('list5').value;
+    var idea = document.getElementById('idea').value;
+    var execution = document.getElementById('execution').value;
+    var viva = document.getElementById('viva').value;
+    alert(id);
+    alert(sid);
+    //if (id != "" && sid!="") {
         $.ajax({
             type: 'POST',
             url: "ajax/evaluate.php",
             data: {
-                mentor:mentor,
+                id:id,
+                sid:sid,
+                idea:idea,
+                execution:execution,
+                viva:viva
             },
             success: function(data) {
+                alert(data);
                 if (data == 0) {
                     alert('evaluated successfully');
-                    window.location = "index.php";
+                    //window.location = "index.php";
                 }else{
                     alert('Input the values');
                 }
             }
         });
-    } else {
+    /*} else {
         alert('please fill all details');
-    }
+    }*/
 }
 
 
+    </script>
+    <script type=text/javascript>
+    $('form').submit(function(e) {
+        e.preventDefault();
+    });
     </script>
 </html>
