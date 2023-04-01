@@ -7,7 +7,7 @@ session_start();
 
         $execute=$query->execute($data);
 ?>
-<table class= "table table-hover table-bordered">
+<table class= "table table-hover table-bordered" style="border: 1px solid; border-botton:1px solid">
     <tr>
         <td>Mentor Id</td>
         <td>Student Id</td>

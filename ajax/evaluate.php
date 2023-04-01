@@ -16,6 +16,10 @@ session_start();
                 $execute1=$query1->execute($data1);
                 if($execute1)
                 {
+                    $iseval =true;
+                    $query2 = $db->prepare("UPDATE assign SET isevaluated=1 WHERE id=? AND sid=?");
+                    $data2=array($iseval);
+                    $execute2=$query2->execute($data2);
                     echo 0;
                 }
                 else{
