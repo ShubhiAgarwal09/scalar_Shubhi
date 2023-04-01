@@ -21,7 +21,7 @@ session_start();
         
         <td><?php echo $datarow['id'];?></td>
         <td><?php echo $datarow['sid'] ?></td>
-        <td><button onclick="deleted(this.value);" class="btn btn-danger" value="<?php echo $datarow['id']?>">Delete</button></td>
+        <td><button onclick="deleted('<?php echo $datarow['id'] ?>','<?php echo $datarow['aid']?>');" class="btn btn-danger" >Delete</button></td>
     </tr>
 <?php
 $srno++;

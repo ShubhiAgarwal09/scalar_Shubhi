@@ -1,26 +1,32 @@
 <?php
 include('connection1.php');
 session_start();
-//if(isset($_POST['token']) && password_verify("teachertoken",$_POST['token']))
-
-    //$class=test_input($_POST['class1']);
+    
     $id = test_input($_POST['mentor']);
     $sid = test_input($_POST['student']);
-    if($id>0 && $sid>0){
-        $query=$db->prepare("INSERT INTO assign(id,sid) VALUES (?,?)");
-        $data=array($id,$sid);
-        $execute=$query->execute($data);
-        if($execute)
-        {
-            echo 0;
-        }
-        else{
-            echo"something went wrong";
-        }
+    $query=$db->prepare("SELECT COUNT(*) AS CNT FROM assign WHERE id=?");
+    $data=array($id);
+    $execute=$query->execute($data);
+    while($datarow=$query->fetch()){
+        if($datarow['CNT']<4){
+            if($id>0 && $sid>0){
+                $query1=$db->prepare("INSERT INTO assign(id,sid) VALUES (?,?)");
+                $data1=array($id,$sid);
+                $execute1=$query1->execute($data1);
+                if($execute1)
+                {
+                    echo 0;
+                }
+                else{
+                    echo"something went wrong";
+                }
+            }else{
+                echo "Input the correct values";
+            }
     }else{
-        alert('Input the values');
+        echo "Cannot Insert constraint violated ";
     }
-    
+}
 
 
 function test_input($data) {

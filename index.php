@@ -105,7 +105,6 @@ $.ajax({
         //token: token
     },
     success: function(data) {
-        //$('#list').html(data);
         $('#list2').html(data);
     }
 });
@@ -123,11 +122,10 @@ function assign() {
                 student:student
             },
             success: function(data) {
+                alert(data);
                 if (data == 0) {
                     alert('assign added successfully');
                     window.location = "index.php";
-                }else{
-                    alert('Input the values');
                 }
             }
         });
@@ -150,15 +148,19 @@ function showassign() {
         });
     }
 
-    function deleted(i){
+    function deleted(i,a){
+        alert(i);
     $.ajax({
         type: 'POST',
         url: "ajax/delassign.php",
         data: {
-            id:i
+            id:i,
+            aid:a
         },
         success: function(data) {
+            alert(data);
             if (data == 0) {
+                
                 alert('Deleted successfully');
                 window.location = "index.php";
                 }
