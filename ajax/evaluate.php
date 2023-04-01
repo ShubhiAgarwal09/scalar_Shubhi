@@ -8,17 +8,16 @@ session_start();
     $execution = test_input($_POST['execution']);
     $viva = test_input($_POST['viva']);
     $total = $idea+$execution+$viva;
-    echo $id;
     
             if($id>0 && $sid>0){
-                $query1=$db->prepare("INSERT INTO evaluation(id,sid,idea,execution,viva,total) VALUES (?,?,?,?,?,?)");
+                $query1=$db->prepare("INSERT INTO evaluation(id,sid,idea,execution,viva,total) VALUES (?,?,?,?,?,?);");
                 $data1=array($id,$sid,$idea,$execution,$viva,$total);
                 $execute1=$query1->execute($data1);
                 if($execute1)
                 {
                     $iseval =true;
                     $query2 = $db->prepare("UPDATE assign SET isevaluated=1 WHERE id=? AND sid=?");
-                    $data2=array($iseval);
+                    $data2=array($id,$sid);
                     $execute2=$query2->execute($data2);
                     echo 0;
                 }

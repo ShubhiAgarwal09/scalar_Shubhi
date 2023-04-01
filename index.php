@@ -122,13 +122,13 @@
     </section>
     <section class="section4">
         <h2  style="text-align:center">Filter Students</h2>
-        <button class="button1" onclick="not_assigned()" style="margin-top: 2rem;">Check not assigned Students ID</button>
+        <button class="button1" onclick="not_eval()" style="margin-top: 2rem;">Check not assigned Students ID</button>
         <div class="box-footer">
                     <div class="tabledesign">
                         <div class="listclass2" id="listclass2"></div>
                     </div>
                 </div>
-        <button class="button1" onclick="yes_assigned()" style="margin-top: 2rem;">Check assigned Students ID</button>
+        <button class="button1" onclick="yes_eval()" style="margin-top: 2rem;">Check assigned Students ID</button>
         <div class="box-footer">
                     <div class="tabledesign">
                         <div class="listclass3" id="listclass3"></div>
@@ -289,15 +289,27 @@ function evaluate1(){
     }*/
 }
 
-function not_assigned() {
+function not_eval() {
         $.ajax({
             type: 'POST',
-            url: "ajax/getslisteval.php",
+            url: "ajax/getnoteval.php",
             data: {
                 //token: token
             },
             success: function(data) {
-                $('#listclass').html(data);
+                $('#listclass2').html(data);
+            }
+        });
+    }
+    function yes_eval() {
+        $.ajax({
+            type: 'POST',
+            url: "ajax/getyeseval.php",
+            data: {
+                //token: token
+            },
+            success: function(data) {
+                $('#listclass3').html(data);
             }
         });
     }
