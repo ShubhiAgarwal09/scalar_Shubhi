@@ -1,8 +1,7 @@
 <?php
 include('connection1.php');
 session_start();
-        $query=$db->prepare('SELECT * FROM assign  ');
-
+        $query=$db->prepare('SELECT mentorlist.email as memail,studentlist.email as smail FROM mentorlist JOIN assign ON assign.id = mentorlist.id JOIN studentlist  ON studentlist.sid=assign.sid');
         $data=array();
 
         $execute=$query->execute($data);
@@ -19,8 +18,8 @@ session_start();
     ?>
     <tr>
         
-        <td><?php echo $datarow['id'];?></td>
-        <td><?php echo $datarow['sid'] ?></td>
+        <td><?php echo $datarow['memail'];?></td>
+        <td><?php echo $datarow['smail'] ?></td>
         <td><button onclick="deleted('<?php echo $datarow['id'] ?>','<?php echo $datarow['aid']?>');" class="btn btn-danger" >Delete</button></td>
     </tr>
 <?php
